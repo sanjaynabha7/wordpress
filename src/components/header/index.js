@@ -6,7 +6,7 @@ class Header extends Component {
         this.state = {  }
     }
     render() { 
-        return ( <h1>Header</h1> );
+        return ( <h1>new</h1> );
     }
 }
  
