@@ -5,7 +5,8 @@ import { getProducts } from "../../store/actions/productsA";
 import GridExample from '../../components/ag'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
-
+import Sidebar from '../../components/sidebar'
+import Dashboard from '../dashboard'
 class HomeView extends Component {
 state = {
   data: []
@@ -21,14 +22,17 @@ state = {
     const allData = this.state.data
     return (
       <> 
+      <Sidebar/>
       <Header/>
-      <div className="api_sec inner_wrpr">
+
+      <Dashboard/>
+      {/* <div className="api_sec inner_wrpr">
        {allData.map((task, index) => (
            <li key={index}>{task.title}</li>
        ))}
  
        <GridExample/>
-      </div>
+      </div> */}
       <Footer/>
       </>
     ); 
