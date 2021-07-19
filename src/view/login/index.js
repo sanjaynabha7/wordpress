@@ -41,7 +41,7 @@ state = {
                     </div>
                     <button className="btn btn-primary shadow-2 mb-4">Login</button>
                     <p className="mb-2 text-muted">Forgot password? <a href="auth-reset-password.html">Reset</a></p>
-                    <p className="mb-0 text-muted">Don’t have an account? <a href="auth-signup.html">Signup</a></p>
+                    <p className="mb-0 text-muted">Don’t have an account? <a href="auth-signup.html">Signup  </a></p>
                 </div>
             </div>
         </div>
