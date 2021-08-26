@@ -6,7 +6,7 @@ import Signup from './view/signUp'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 function App() {
   return (
-    <Router>
+    <Router> 
     <Switch>
         <Route path='/login' component={Login} />
         <Route path='/sign-up' component={Signup} />
