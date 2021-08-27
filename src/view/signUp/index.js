@@ -1,19 +1,27 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getProducts } from "../../store/actions/productsA";
+import { addUser } from "../../store/actions/users";
 class SignUpView extends Component {
 state = {
   data: []
 }
 
  async componentDidMount() {
-     await this.props.getProducts()   
-     const allProduct = this.props.ProductsR
-     this.setState({data:allProduct})
+  }
+
+  AddUser  = async ($e) => {
+      debugger
+    $e.preventDefault();
+    let payload = {
+        firstName: this.state.firstName,
+        lastName: this.state.lastName,
+        email: this.state.Email,
+        password: this.state.Password,
+    }
+    await this.props.addUser(payload);
   }
 
   render() {
-    const allData = this.state.data
     return (
       <>
  <div class="auth-wrapper">
@@ -31,16 +39,19 @@ state = {
                     </div>
                     <h3 class="mb-4">Sign up</h3>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Username"/>
+                        <input type="text" class="form-control" placeholder="First Name" value={this.state.firstName}  onChange={(e) => this.setState({ firstName: e.target.value })}/>
                     </div>
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" placeholder="Email"/>
+                        <input type="text" class="form-control" placeholder="Last Name" value={this.state.lastName}  onChange={(e) => this.setState({ lastName: e.target.value })}/>
+                    </div>
+                    <div class="input-group mb-3">
+                        <input type="email" class="form-control" placeholder="Email" value={this.state.Email}  onChange={(e) => this.setState({ Email: e.target.value })}/>
                     </div>
                     <div class="input-group mb-4">
-                        <input type="password" class="form-control" placeholder="password"/>
+                        <input type="password" class="form-control" placeholder="password" value={this.state.Password}  onChange={(e) => this.setState({ Password: e.target.value })}/>
                     </div>
 
-                    <button class="btn btn-primary shadow-2 mb-4">Sign up</button>
+                    <button class="btn btn-primary shadow-2 mb-4"  onClick={this.AddUser}>Sign up</button>
                     <p class="mb-0 text-muted">Allready have an account? <a href="auth-signin.html"> Log in</a></p>
                 </div>
             </div>
@@ -51,5 +62,5 @@ state = {
   }
 }
 
-const mapStateToProps = ({ ProductsR }) => ({ ProductsR });
-export default connect(mapStateToProps, { getProducts})(SignUpView);
+const mapStateToProps = ({ USER_REDUCER }) => ({ USER_REDUCER });
+export default connect(mapStateToProps, { addUser})(SignUpView);

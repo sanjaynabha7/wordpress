@@ -1,19 +1,25 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { getProducts } from "../../store/actions/productsA";
-import GridExample from '../../components/ag'
-import Header from '../../components/header'
-import Footer from '../../components/footer'
+import { login } from "../../store/actions";
+import { addUser } from "../../store/actions/users";
 class LoginView extends Component {
 state = {
   data: []
 }
-
  async componentDidMount() {
-     await this.props.getProducts()   
-     const allProduct = this.props.ProductsR
-     this.setState({data:allProduct})
+
   }
+  login  = async ($e) => {
+    debugger
+  $e.preventDefault();
+  let payload = {
+      email: this.state.email,
+      password: this.state.password,
+  }
+  await this.props.login(payload);
+  this.props.history.replace('/')
+  console.log("Working")
+}
 
   render() {
     const allData = this.state.data
@@ -34,12 +40,12 @@ state = {
                     </div>
                     <h3 className="mb-4">Login</h3>
                     <div className="input-group mb-3">
-                        <input type="email" className="form-control" placeholder="Email"/>
+                        <input type="email" className="form-control" placeholder="Email" value={this.state.email}  onChange={(e) => this.setState({ email: e.target.value })}/>
                     </div>
                     <div className="input-group mb-4">
-                        <input type="password" className="form-control" placeholder="password"/>
+                        <input type="password" className="form-control" placeholder="password" value={this.state.password}  onChange={(e) => this.setState({ password: e.target.value })}/>
                     </div>
-                    <button className="btn btn-primary shadow-2 mb-4">Login</button>
+                    <button className="btn btn-primary shadow-2 mb-4" onClick={this.login}>Login</button>
                     <p className="mb-2 text-muted">Forgot password? <a href="auth-reset-password.html">Reset</a></p>
                     <p className="mb-0 text-muted">Don’t have an account? <a href="auth-signup.html">Signup  </a></p>
                 </div>
@@ -51,5 +57,5 @@ state = {
   }
 }
 
-const mapStateToProps = ({ ProductsR }) => ({ ProductsR });
-export default connect(mapStateToProps, { getProducts})(LoginView);
+const mapStateToProps = ({ USER_REDUCER }) => ({ USER_REDUCER });
+export default connect(mapStateToProps, { login })(LoginView);

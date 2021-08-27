@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 const { Schema, Types } = mongoose;
 
 const usersSchema = new Schema({
-  userName: { type: String },
+  firstName: { type: String },
+  lastName: { type: String },
   email: { type: String },
   password: { type: String },
 }, { timestamps: { currentTime: () => Date.now() } });

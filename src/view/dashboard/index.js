@@ -7,13 +7,7 @@ class Dashboard extends Component {
     }
     render() { 
         return (    <>
-            <div class="pcoded-main-container">
-        <div class="pcoded-wrapper">
-            <div class="pcoded-content">
-                <div class="pcoded-inner-content">
 
-                    <div class="main-body">
-                        <div class="page-wrapper">
                        
                             <div class="row">
                               
@@ -584,12 +578,7 @@ class Dashboard extends Component {
 
                             </div>
                             
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
                     </> );
     }
 }

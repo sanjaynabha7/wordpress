@@ -13,18 +13,11 @@ mongoose.connect(process.env.DATABASE_ACCESS,{ useNewUrlParser: true, useUnified
   }); 
  
 const app = express()
-app.use(express.json());
-app.use(cors()); 
+app.use(express.json());  
+app.use(cors());    
  
 
 // require all routes
 app.use("/api", routs);
-
-
-
-
-
-
-
 
 app.listen(5000, () => { console.log("Server is running")} ) 
