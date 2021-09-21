@@ -3,7 +3,7 @@ import ProductsReducer from './productsR'
 import UserReducer from './usersR';
 const Reducers = combineReducers({
     ProductsR: ProductsReducer,
-    USER_REDUCER: UserReducer
+    USER: UserReducer
 
 })
 

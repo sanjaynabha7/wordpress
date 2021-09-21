@@ -4,7 +4,6 @@ import axios from 'axios'
 
 
 export const addUser = (payload) => {
-    debugger
     return async (dispatch) => {
         await axios.post(API.addUser, payload).then(response => {
             dispatch({
@@ -27,6 +26,8 @@ export const login = (payload) => {
     debugger
     return async (dispatch) => {
         await axios.post(API.login, payload).then(response => {
+            const _data = JSON.stringify(payload);
+            localStorage.setItem('user', _data);
             dispatch({
                 type:LOGIN,
                 payload:response.data
@@ -44,7 +45,6 @@ export const login = (payload) => {
 }
 
 export const getUser =()=>{
-    debugger
     return async(dispatch) => {
         await axios.get(API.getUsers).then(response => {
              dispatch({

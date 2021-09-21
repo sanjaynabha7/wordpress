@@ -15,18 +15,14 @@ class HomeView extends Component {
 
   async componentDidMount() {
     debugger
-    await this.props.getUser()
-    const allProducta = this.props.USER_REDUCER
-    this.setState({ data: allProducta })
-    debugger
+    const allProducta = this.props.USER
+
 
   }
 
 
 
   render() {
-    const allData = this.state.data
-    console.log(allData)
     return (
       <>
         <Sidebar />
@@ -40,10 +36,7 @@ class HomeView extends Component {
                     <div className="api_sec inner_wrpr">
                     <Route path='/' component={Dashboard} />
                     <Route path='/grid-example' component={GridExample} />
-                      {allData.map((task, index) => (
-                        <li key={index}>{task.firstName}</li>
-                      ))}
-                    </div>
+                      </div>
                   </div>
                 </div>
               </div>
@@ -56,5 +49,5 @@ class HomeView extends Component {
   }
 }
 
-const mapStateToProps = ({ ProductsR, USER_REDUCER }) => ({ ProductsR, USER_REDUCER });
+const mapStateToProps = ({ ProductsR, USER }) => ({ ProductsR, USER });
 export default connect(mapStateToProps, { getProducts, getUser })(HomeView);

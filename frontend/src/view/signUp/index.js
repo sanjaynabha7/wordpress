@@ -10,7 +10,6 @@ state = {
   }
 
   AddUser  = async ($e) => {
-      debugger
     $e.preventDefault();
     let payload = {
         firstName: this.state.firstName,

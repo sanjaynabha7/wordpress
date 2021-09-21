@@ -6,19 +6,30 @@ class LoginView extends Component {
 state = {
   data: []
 }
- async componentDidMount() {
-
+  componentDidUpdate () {
+    if (this.props.USER.length) {
+      this.checkUserAndRedirect();
+  }
   }
   login  = async ($e) => {
-    debugger
   $e.preventDefault();
   let payload = {
       email: this.state.email,
       password: this.state.password,
   }
   await this.props.login(payload);
-  this.props.history.replace('/')
+
   console.log("Working")
+}
+
+checkUserAndRedirect =  () => {
+
+  if (this.props.USER) {
+
+
+      this.props.history.push('/');
+
+  }
 }
 
   render() {
@@ -57,5 +68,5 @@ state = {
   }
 }
 
-const mapStateToProps = ({ USER_REDUCER }) => ({ USER_REDUCER });
+const mapStateToProps = ({ USER }) => ({ USER });
 export default connect(mapStateToProps, { login })(LoginView);
