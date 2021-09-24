@@ -23,7 +23,6 @@ export const addUser = (payload) => {
 }
 
 export const login = (payload) => {
-    debugger
     return async (dispatch) => {
         await axios.post(API.login, payload).then(response => {
             const _data = JSON.stringify(payload);

@@ -1,72 +1,120 @@
-'use strict';
-import React, { useState } from 'react';
-import { AgGridReact, AgGridColumn } from 'ag-grid-react';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import React, { Component } from 'react'
 import { connect } from "react-redux";
-import { getProducts } from "../store/actions/productsA";
+import * as _ from 'lodash';
+import Grid from "./grid";
+import {get,post} from "axios";
 
-const GridExample = () => {
-  const [gridApi, setGridApi] = useState(null);
-  const [gridColumnApi, setGridColumnApi] = useState(null);
-  const [rowData, setRowData] = useState(null);
+class UsersView extends Component {
+  state = {
+    loading: false,
+    isSelectedRowData: "",
+    isShow: false,
+    locked: false,
+    dataFixed:[],
+    columnDefs: [
 
-  const onGridReady = (params) => {
-    setGridApi(params.api);
-    setGridColumnApi(params.columnApi);
+      {
+        headerName: "Athlete",
+        field: "athlete",
+        sortable: true,
+        filter: false,
+        filterParams: {
+          filterOptions: ['equals', 'lessThan', 'greaterThan'],
+        },
+        flex: 1,
+      },
+      {
+        headerName: "Date",
+        field: "date",
+        sortable: true,
 
-    const updateData = (data) => {
-        console.log(data)
-      params.api.setRowData(data.slice(0, 50));
-    };
+        filter: false,
+        resizable: true,
+        flex: 1,
 
-    fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
-      .then((resp) => resp.json())
-      .then((data) => updateData(data));
+      },
+      {
+        headerName: "Age",
+        field: "age",
+        sortable: true,
+        filter: false,
+        resizable: true,
+        flex: 1,
+
+      },
+      {
+        headerName: "Sport",
+        field: "sport",
+        sortable: true,
+        filter: false,
+        resizable: false,
+        flex: 1,
+
+      },
+
+    ],
+    rowData: [],
+    searchText: '',
   };
+  usersPayload = {};
 
+  async componentDidMount() {
+    debugger
+ 
+    this.getData();
+  }    
+
+
+
+   
   
-  return (
-    <div style={{ width: '100%', height: '400px' }}>
-      <div className="example-wrapper" style={{ width: '100%', height: '400px' }}>
 
-        <div
-          id="myGrid"
-          style={{
-            height: '100%',
-            width: '100%',
-          }}
-          className="ag-theme-alpine"
-        >
-          <AgGridReact
-            defaultColDef={{
-              flex: 1,
-              minWidth: 100,
-              sortable: true,
-              filter: true,
-            }}
-            autoGroupColumnDef={{ minWidth: 200 }}
-            groupDefaultExpanded={1}
-            onGridReady={onGridReady}
-            rowData={rowData}
-          >
-            <AgGridColumn field="country" rowGroup={true} hide={true} />
-            <AgGridColumn field="athlete" minWidth={180} />
-            <AgGridColumn field="age" />
-            <AgGridColumn field="year" />
-            <AgGridColumn field="date" minWidth={150} />
-            <AgGridColumn field="sport" minWidth={150} />
-            <AgGridColumn field="gold" />
-            <AgGridColumn field="silver" />
-            <AgGridColumn field="bronze" /> 
-            <AgGridColumn field="total" />
-          </AgGridReact>
+  async  getData() {
+
+    try {
+      let dataList = await fetch("https://www.ag-grid.com/example-assets/olympic-winners.json").then(response =>  response.json()) 
+      this.setState({rowData:dataList})
+      console.log("dataaa",this.state.rowData)
+    } catch(err) {
+      // catches errors both in fetch and response.json
+      alert(err);
+    }
+  }
+  
+
+
+
+
+  render() {
+
+    const { loading } = this.state;
+    const { isShow } = this.state;
+
+    return (
+
+      <>
+
+        <div className="shadow_white_box full-box mt-0">
+          <div className="clients_grid">
+            <Grid
+              //  frameworkComponent={this.frameworkComponents}
+              columnDefs={this.state.columnDefs}
+               rowData={this.state.rowData}
+              onGridReady={this.onGridReady}
+              height='600px'
+
+
+            >
+
+            </Grid>
+          </div>
+
         </div>
-      </div>
-    </div>
-  );
-};
 
+      </>
+    )
+  }
+}
 
-const mapStateToProps = ({ ProductsR }) => ({ ProductsR });
-export default connect(mapStateToProps, { getProducts})(GridExample);
+const mapStateToProps = ( { }) => ({  });
+export default connect(mapStateToProps, {  })(UsersView);
