@@ -4,8 +4,10 @@ const { Schema } = mongoose
 const postsSchema = new Schema({
     postTitle: { type: String },
     postDescription: { type: String },
-    post
-
+    postImage: { type: String },
+    postCategory: { type: String },
+    postTags: [],
+    postPage: [],
 }, { timestamps: { currentTime: () => Date.now() } });
 
 const Posts = mongoose.model("Post", postsSchema);
