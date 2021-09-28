@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const User = require("../../models/users");
 
-addUser = (req, res) => {
+addUser = (req, res) => { 
     const payload = req.body;
 User.findOne({ email: payload.email }, (err, User) => {
     if(User){

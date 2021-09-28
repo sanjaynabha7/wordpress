@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { addNewPost } from "../../../store/actions/index";
 import { connect } from "react-redux";
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useParams } from "react-router-dom";
 class AddPost extends Component {
     state = {
 
@@ -26,6 +26,8 @@ class AddPost extends Component {
 
 
     render() {
+
+
         return (
             <>
                 <div class="page-header">
@@ -33,7 +35,7 @@ class AddPost extends Component {
                         <div class="row align-items-center">
                             <div class="col-md-12">
                                 <div class="page-header-title">
-                                    <h5 class="m-b-10">Add New Post</h5>
+                                    <h5 class="m-b-10">Edit Post</h5>
                                 </div>
                             </div>
                         </div>

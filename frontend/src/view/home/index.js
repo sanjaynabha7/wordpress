@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
-import { getProducts, getUser } from "../../store/actions";
+import { getProducts,  getAllPost } from "../../store/actions";
 import GridExample from '../../components/ag'
 import Header from '../../components/header'
 import Footer from '../../components/footer'
 import Sidebar from '../../components/sidebar'
 import Dashboard from '../dashboard'
 import Posts from '../posts'
-import AddPost from '../posts/addpost'
-
+import AddPost from '../posts/addPost'
+import EditPost from '../posts/editPost'
 
 
 class HomeView extends Component {
@@ -18,7 +18,9 @@ class HomeView extends Component {
   }
 
   async componentDidMount() {
-    const allProducta = this.props.USER
+    // await this.props.getAllPost()
+    await this.props.getAllPost()
+    const allProducta = this.props
 
 
   }
@@ -37,13 +39,13 @@ class HomeView extends Component {
                 <div class="main-body">
                   <div class="page-wrapper">
                     <div className="api_sec inner_wrpr">
-                    {/* <Route path='/' component={Dashboard} /> */}
-                    <Route path='/posts' component={Posts} />
-                    <Route path='/new-post' component={AddPost} />
+                      {/* <Route path='/' component={Dashboard} /> */}
+                      <Route path='/posts' component={Posts} />
+                      <Route path='/new-post' component={AddPost} />
+                      <Route path='/post/:id' component={EditPost} />
 
-                    
-                    <Route path='/grid-example' component={GridExample} />
-                      </div>
+                      <Route path='/grid-example' component={GridExample} />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -56,5 +58,5 @@ class HomeView extends Component {
   }
 }
 
-const mapStateToProps = ({ ProductsR, USER }) => ({ ProductsR, USER });
-export default connect(mapStateToProps, { getProducts, getUser })(HomeView);
+const mapStateToProps = ({ ProductsR, POST }) => ({ ProductsR,  POST });
+export default connect(mapStateToProps, { getProducts,  getAllPost })(HomeView);

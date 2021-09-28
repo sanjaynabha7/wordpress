@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import ProductsReducer from './productsR'
 import UserReducer from './usersR';
-import PostReducer from './usersR';
+import PostReducer from './postsR';
 
 
 const Reducers = combineReducers({
