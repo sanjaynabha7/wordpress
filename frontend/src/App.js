@@ -6,13 +6,13 @@ import Signup from './view/signUp'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 function App() {
   return (
-    <Router> 
-    <Switch>
+    <Router>
+      <Switch>
         <Route path='/login' component={Login} />
         <Route path='/sign-up' component={Signup} />
         <Route path='/' component={HomeView} />
-    </Switch>
-</Router>
+      </Switch>
+    </Router>
   );
 }
 

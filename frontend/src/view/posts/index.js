@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getAllPost, getUser } from "../../store/actions/index";
+import { getAllPost, getUser, propsData } from "../../store/actions/index";
 import { connect } from "react-redux";
 import moment from "moment"
 import { Link, Route } from "react-router-dom";
@@ -9,7 +9,9 @@ class Posts extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            postList: []
+            postList: [],
+            singleData: [],
+            editShow: false,
         }
     }
 
@@ -20,14 +22,17 @@ class Posts extends Component {
         this.setState({ postList: this.props.POST })
     }
     editPost = (post) => {
-        console.log("Working", post)
+        debugger
+        console.log("Workidddng", post)
+        this.props.propsData(post)
+        this.props.history.replace(`/post/${post._id}`)
+        // this.setState({ singleData: post, editShow: true })
     }
 
 
     render() {
-        const { postList } = this.state
+        const { postList, singleData, editShow } = this.state
         return (<>
-            <Route path='/post/:id' component={EditPost} />
             <div class="page-header">
                 <div class="page-block">
                     <div class="row align-items-center">
@@ -61,18 +66,12 @@ class Posts extends Component {
                                                             <h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>{moment(post.createdAt).format('DD MMM YYYY')} </h6>
                                                         </td>
                                                         <td>
-                                                            <Link
-                                                                to={{
-                                                                    pathname: `/post/${post._id}`,
-                                                                    state: { users: post }
-                                                                }}
-                                                            >
+                                                            {/* <Link   to={`/post/${post._id}`}>
                                                                 <button>View</button>
-                                                            </Link>;
+                                                            </Link>; */}
 
-
-                                                            <span onClick={() => this.editPost(post)} class="label theme-bg2 text-white f-12">View</span>
-                                                            <span class="label theme-bg text-white f-12">Edit</span>
+                                                            <span onClick={() => this.editPost(post)} class="label theme-bg2 text-white f-12">Edit</span>
+                                                            {/* <span class="label theme-bg text-white f-12">Edit</span> */}
                                                         </td>
                                                     </tr>
                                                 ))}
@@ -81,6 +80,8 @@ class Posts extends Component {
                                     </div>
                                 </div>
                             </div>
+
+                            {/* {editShow ? <EditPost data={singleData} /> : null} */}
                         </div>
                     </div>
 
@@ -90,5 +91,5 @@ class Posts extends Component {
         </>);
     }
 }
-const mapStateToProps = ({ POST, UserReducer }) => ({ POST, UserReducer });
-export default connect(mapStateToProps, { getAllPost, getUser })(Posts);
+const mapStateToProps = ({ POST, UserReducer, PROPS_DATA }) => ({ POST, UserReducer, PROPS_DATA });
+export default connect(mapStateToProps, { getAllPost, getUser, propsData })(Posts);

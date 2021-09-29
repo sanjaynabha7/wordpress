@@ -5,6 +5,7 @@
     login: `http://localhost:5000/api/auth/login`,
     addNewPosts: `http://localhost:5000/api/post/add-new-post`,
     getAllPosts: `http://localhost:5000/api/post/get-all-posts`,
+    updatePost: `http://localhost:5000/api/post/update-post`,
 
 
 }

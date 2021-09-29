@@ -33,5 +33,24 @@ getPosts = (req, res) => {
     })
 }
 
+updatePosts = (req, res) => {
+    const Post = req.body;
+    Posts.findOneAndUpdate({ _id: req.body.id }, Post).then(createdRecord => {
+        return res.status(200).send({
+            status: 200,
+            msg: "ok",
+            data: createdRecord,
+        });
+    }).catch(e => {
+        res.status(400).send({
+            status: 400,
+            msg: "error",
+            data: e,
+        });
+    });
+}
 
-module.exports = { addNewPost, getPosts };
+
+
+
+module.exports = { addNewPost, getPosts, updatePosts };

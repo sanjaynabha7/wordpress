@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { addNewPost } from "../../../store/actions/index";
 import { connect } from "react-redux";
-import { useLocation, Link } from "react-router-dom";
+// import { useLocation, Link } from "react-router-dom";
 class AddPost extends Component {
     state = {
 

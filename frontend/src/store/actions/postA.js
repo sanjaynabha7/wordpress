@@ -1,5 +1,5 @@
 import API from '../../utils/api'
-import { ADD_POST, GET_ALL_POST, SET_ERROR } from '../type'
+import { ADD_POST, GET_ALL_POST, SET_ERROR, UPDATE_POST } from '../type'
 import axios from 'axios'
 
 export const addNewPost = (payload) => {
@@ -27,6 +27,26 @@ export const getAllPost = () => {
         await axios.get(API.getAllPosts).then(response => {
             dispatch({
                 type: GET_ALL_POST,
+                payload: response.data.data
+            });
+        }).catch(e => {
+            console.log(e);
+            dispatch({
+                type: SET_ERROR,
+                payload: {
+                    e, error: true
+                }
+            })
+        })
+    }
+}
+
+
+export const updatePost = (payload) => {
+    return async (dispatch) => {
+        await axios.put(API.updatePost, payload).then(response => {
+            dispatch({
+                type: UPDATE_POST,
                 payload: response.data.data
             });
         }).catch(e => {

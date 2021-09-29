@@ -1,27 +1,31 @@
 import React, { Component } from 'react'
-import { addNewPost } from "../../../store/actions/index";
+import { updatePost } from "../../../store/actions/index";
 import { connect } from "react-redux";
-import { useLocation, Link, useParams } from "react-router-dom";
-class AddPost extends Component {
+
+class EditPost extends Component {
     state = {
-
+        postTitle: "",
+        postDescription: "",
+        postImage: "",
+        _id:""
     }
 
-    componentDidMount(){
+    componentDidMount() {
         debugger
-        const ddd = this.props
+        const { postTitle, postDescription, postImage, _id } = this.props.PROPS_DATA
+        this.setState({ postTitle, postDescription, postImage, _id})
     }
- 
 
-    AddNewPost = async ($e) => {
+    UpdatePost = async ($e) => {
         debugger
         $e.preventDefault();
         let payload = {
+            id: this.state._id,
             postTitle: this.state.postTitle,
             postDescription: this.state.postDescription,
             postImage: this.state.postImage,
         }
-        await this.props.addNewPost(payload);
+        await this.props.updatePost(payload);
     }
 
 
@@ -77,7 +81,7 @@ class AddPost extends Component {
                                                         </select>
                                                     </div>
 
-                                                    <button type="submit" class="btn btn-primary" onClick={this.AddNewPost}>Submit</button>
+                                                    <button type="submit" class="btn btn-primary" onClick={this.UpdatePost}>Submit</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -93,5 +97,5 @@ class AddPost extends Component {
     }
 }
 
-const mapStateToProps = ({ USER_REDUCER }) => ({ USER_REDUCER });
-export default connect(mapStateToProps, { addNewPost })(AddPost);
+const mapStateToProps = ({ USER_REDUCER, PROPS_DATA }) => ({ USER_REDUCER, PROPS_DATA });
+export default connect(mapStateToProps, { updatePost })(EditPost);
