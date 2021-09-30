@@ -32,11 +32,12 @@ class Sidebar extends Component {
                     </div>
                     <div className="navbar-content scroll-div">
                         <ul className="nav pcoded-inner-navbar">
-                            <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" className="nav-item active">
+                            <li data-username="dashboard Default Ecommerce CRM Analytics Crypto Project" className="nav-item ">
                                 <a href="index.html" className="nav-link "><span className="pcoded-micon"><DashboardIcon/></span><span className="pcoded-mtext">Dashborad</span></a>
                             </li>
-                            <li data-username="form elements advance componant validation masking wizard picker select" className="nav-item">
+                            <li data-username="form elements advance componant validation masking wizard picker select" className="nav-item active">
                                 <Link to={"/posts"} className="nav-link "><span className="pcoded-micon"><PostAddIcon/></span><span className="pcoded-mtext">Posts</span></Link>
+                                <Link to={"/new-post"} className="nav-link "><span className="pcoded-mtext">Add post</span></Link>
                             </li>
                             <li data-username="form elements advance componant validation masking wizard picker select" className="nav-item">
                                 <a href="form_elements.html" className="nav-link "><span className="pcoded-micon"><PermMediaIcon/></span><span className="pcoded-mtext">Media</span></a>

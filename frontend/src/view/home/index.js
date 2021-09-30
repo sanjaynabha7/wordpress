@@ -32,12 +32,12 @@ class HomeView extends Component {
       <>
         <Sidebar />
         <Header />
-        <div class="pcoded-main-container">
-          <div class="pcoded-wrapper">
-            <div class="pcoded-content">
-              <div class="pcoded-inner-content">
-                <div class="main-body">
-                  <div class="page-wrapper">
+        <div className="pcoded-main-container">
+          <div className="pcoded-wrapper">
+            <div className="pcoded-content">
+              <div className="pcoded-inner-content">
+                <div className="main-body">
+                  <div className="page-wrapper">
                     <div className="api_sec inner_wrpr">
                       {/* <Route path='/' component={Dashboard} /> */}
                       <Route path='/posts' component={Posts} />
