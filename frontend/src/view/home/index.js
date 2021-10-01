@@ -10,6 +10,8 @@ import Dashboard from '../dashboard'
 import Posts from '../posts'
 import AddPost from '../posts/addpost'
 import EditPost from '../posts/editPost'
+import Menu from '../../components/menu'
+
 
 
 class HomeView extends Component {
@@ -44,6 +46,8 @@ class HomeView extends Component {
                       <Route path='/new-post' component={AddPost} />
                       <Route path='/post/:id' component={EditPost} />
                       <Route path='/grid-example' component={GridExample} />
+                      <Route path='/menu' component={Menu} />
+
                     </div>
                   </div>
                 </div>
