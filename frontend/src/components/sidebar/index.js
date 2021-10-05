@@ -38,6 +38,7 @@ class Sidebar extends Component {
                             <li data-username="form elements advance componant validation masking wizard picker select" className="nav-item active">
                                 <Link to={"/posts"} className="nav-link "><span className="pcoded-micon"><PostAddIcon/></span><span className="pcoded-mtext">Posts</span></Link>
                                 <Link to={"/new-post"} className="nav-link "><span className="pcoded-mtext">Add post</span></Link>
+                                <Link to={"/category"} className="nav-link "><span className="pcoded-mtext">Category</span></Link>
                             </li>
                             <li data-username="form elements advance componant validation masking wizard picker select" className="nav-item">
                                 <a href="form_elements.html" className="nav-link "><span className="pcoded-micon"><PermMediaIcon/></span><span className="pcoded-mtext">Media</span></a>

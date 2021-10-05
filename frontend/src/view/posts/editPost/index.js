@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { updatePost } from "../../../store/actions/index";
+import { updatePost, getCategories } from "../../../store/actions";
 import { connect } from "react-redux";
 import Editor from '../../../components/textEditor/text-editor'
 class EditPost extends Component {
@@ -7,19 +7,30 @@ class EditPost extends Component {
         postTitle: "",
         postDescription: "",
         postImage: "",
-        _id:""
+        _id: "",
+        postCategory: "",
+        categoryList: [],
+        category: ""
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+
+        const { postTitle, postDescription, postImage, _id, postCategory } = this.props.PROPS_DATA
+        this.setState({ postTitle, postDescription, postImage, _id, postCategory: postCategory.categoryName })
+        console.log("ssss", postDescription)
+        await this.props.getCategories()
+        this.setState({ categoryList: this.props.CATEGORY })
         debugger
-        const { postTitle, postDescription, postImage, _id } = this.props.PROPS_DATA
-        this.setState({ postTitle, postDescription, postImage, _id})
     }
     textChange = (data) => {
         debugger
-        console.log("Working", data)
-        this.setState({postDescription:data})
+        console.log("ssss", data)
+        this.setState({ postDescription: data })
         console.log(this.state.postDescription)
+    }
+
+    changeCategory = (event) => {
+        this.setState({ category: event.target.value })
     }
 
     UpdatePost = async ($e) => {
@@ -30,14 +41,15 @@ class EditPost extends Component {
             postTitle: this.state.postTitle,
             postDescription: this.state.postDescription,
             postImage: this.state.postImage,
+            postCategory: this.state.category
         }
         await this.props.updatePost(payload);
+        this.props.history.replace('/posts')
     }
-
 
     render() {
 
-
+        const { postDescription } = this.props.PROPS_DATA
         return (
             <>
                 <div className="page-header">
@@ -73,18 +85,16 @@ class EditPost extends Component {
                                                     </div>
                                                     <div className="form-group">
                                                         <label for="exampleFormControlTextarea1">Example textarea</label>
-                                                        <Editor value={this.state.postDescription} onChange={this.textChange}/>
+                                                        <Editor value={postDescription} onChange={this.textChange} />
                                                         {/* <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" value={this.state.postDescription} onChange={(e) => this.setState({ postDescription: e.target.value })}></textarea> */}
                                                     </div>
 
                                                     <div className="form-group">
-                                                        <label for="exampleFormControlSelect1">Example select</label>
-                                                        <select className="form-control" id="exampleFormControlSelect1">
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                            <option>4</option>
-                                                            <option>5</option>
+                                                        <label for="exampleFormControlSelect1">Select Category : <strong>{this.state.postCategory}</strong> </label>
+                                                        <select className="form-control" id="exampleFormControlSelect1" value={this.state.category} onChange={this.changeCategory}>
+                                                            {this.state.categoryList.map(el => (
+                                                                <option key={el._id} value={el._id}>{el.categoryName}</option>
+                                                            ))}
                                                         </select>
                                                     </div>
 
@@ -104,5 +114,5 @@ class EditPost extends Component {
     }
 }
 
-const mapStateToProps = ({ USER_REDUCER, PROPS_DATA }) => ({ USER_REDUCER, PROPS_DATA });
-export default connect(mapStateToProps, { updatePost })(EditPost);
+const mapStateToProps = ({ USER_REDUCER, PROPS_DATA, CATEGORY }) => ({ USER_REDUCER, PROPS_DATA, CATEGORY });
+export default connect(mapStateToProps, { updatePost, getCategories })(EditPost);

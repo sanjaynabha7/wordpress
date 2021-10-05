@@ -1,36 +1,52 @@
 import React, { Component } from 'react'
-import { addNewPost } from "../../../store/actions/index";
+import { addNewPost, getCategories } from "../../../store/actions";
 import { connect } from "react-redux";
 import Editor from '../../../components/textEditor/text-editor'
 class AddPost extends Component {
     state = {
-
+        replaced: '',
+        postTitle: '',
+        category: '',
+        categoryList: []
     }
-
-
-    componentDidMount() {
-        debugger
-
+    async componentDidMount() {
+        await this.props.getCategories()
+        this.setState({ categoryList: this.props.CATEGORY })
     }
     textChange = (data) => {
-        debugger
         console.log("Working", data)
-        this.setState({postDescription:data})
+        this.setState({ postDescription: data })
         console.log(this.state.postDescription)
     }
 
+    titleChange = (event) => {
+        const postTitle = event.target.value
+        const lowerCase = postTitle.toLowerCase()
+        const replaced = lowerCase.replace(/ /g, "-");
+        this.setState({ replaced, postTitle })
+    }
+    changeCategory = (event) => {
+        this.setState({ category: event.target.value })
+        console.log(this.state.category, "asdasdasd")
+    }
 
     AddNewPost = async ($e) => {
-        debugger
         $e.preventDefault();
         let payload = {
             postTitle: this.state.postTitle,
             postDescription: this.state.postDescription,
             postImage: this.state.postImage,
+            postUrl: this.state.replaced,
+            postCategory: this.state.category
         }
         await this.props.addNewPost(payload);
+        this.props.history.replace('/posts')
     }
 
+    fileChangedHandler = (event) => {
+        debugger
+        const file = event.target.files[0]
+      }
 
     render() {
         return (
@@ -60,30 +76,32 @@ class AddPost extends Component {
                                                 <form>
                                                     <div className="form-group">
                                                         <label>Title</label>
-                                                        <input type="text" className="form-control" placeholder="Title" value={this.state.postTitle} onChange={(e) => this.setState({ postTitle: e.target.value })} />
+                                                        <input type="text" className="form-control" placeholder="Title" value={this.state.postTitle} onChange={this.titleChange} />
                                                     </div>
                                                     <div className="form-group">
                                                         <label>Image</label>
                                                         <input type="text" className="form-control" placeholder="Image" value={this.state.postImage} onChange={(e) => this.setState({ postImage: e.target.value })} />
                                                     </div>
+
+                                                    <input type="file" onChange={this.fileChangedHandler}/>
+                                                
+
                                                     <div className="form-group">
-                                                        <label for="exampleFormControlTextarea1">Post Description</label>
-                                                        <Editor value={this.state.postDescription} onChange={this.textChange}/>
-                                                        {/* <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" value={this.state.postDescription} onChange={(e) => this.setState({ postDescription: e.target.value })}></textarea> */}
+                                                    <label for="exampleFormControlTextarea1">Post Description</label>
+                                                    <Editor value={this.state.postDescription} onChange={this.textChange} />
+                                                {/* <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" value={this.state.postDescription} onChange={(e) => this.setState({ postDescription: e.target.value })}></textarea> */}
                                                     </div>
 
                                                     <div className="form-group">
-                                                        <label for="exampleFormControlSelect1">Example select</label>
-                                                        <select className="form-control" id="exampleFormControlSelect1">
-                                                            <option>1</option>
-                                                            <option>2</option>
-                                                            <option>3</option>
-                                                            <option>4</option>
-                                                            <option>5</option>
-                                                        </select>
+                                                    <label for="exampleFormControlSelect1">Select Category</label>
+                                                    <select className="form-control" id="exampleFormControlSelect1" value={this.state.category} onChange={this.changeCategory}>
+                                                {this.state.categoryList.map(el => (
+                                                    <option key={el._id} value={el._id}>{el.categoryName}</option>
+                                                ))}
+                                                    </select>
                                                     </div>
 
-                                                    <button type="submit" className="btn btn-primary" onClick={this.AddNewPost}>Submit</button>
+                                                    <button type ="submit" className="btn btn-primary" onClick={this.AddNewPost}>Submit</button>
                                                 </form>
                                             </div>
                                         </div>
@@ -99,5 +117,5 @@ class AddPost extends Component {
     }
 }
 
-const mapStateToProps = ({ USER_REDUCER }) => ({ USER_REDUCER });
-export default connect(mapStateToProps, { addNewPost })(AddPost);
+const mapStateToProps = ({ USER_REDUCER, CATEGORY }) => ({ USER_REDUCER, CATEGORY });
+export default connect(mapStateToProps, { addNewPost, getCategories })(AddPost);

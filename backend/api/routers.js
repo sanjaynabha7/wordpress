@@ -6,11 +6,15 @@ const router = express.Router();
  */
  const users = require("./routers/users");
  const posts = require("./routers/posts");
+ const category = require("./routers/category");
+
 
 
 
  router.use("/auth", users);
  router.use("/post", posts);
+ router.use("/category", category);
+ 
 
 
  module.exports = router;

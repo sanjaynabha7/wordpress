@@ -1,48 +1,47 @@
 import React, { Component } from 'react';
-import { getAllPost, getUser, propsData } from "../../store/actions/index";
+import { addCategory, getCategories, propsData } from "../../../store/actions";
 import { connect } from "react-redux";
 import moment from "moment"
-import { Link, Route } from "react-router-dom";
-import EditPost from './editPost'
-import TextEditor from '../../components/textEditor/text-editor'
+import EditPost from './edit'
 import './style.css'
-class Posts extends Component {
+import Button from 'react-bootstrap/Button'
+class Category extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            postList: [],
+            categoryList: [],
             singleData: [],
             editShow: false,
+            show: false,
+            editForm: false
         }
     }
-
-
     async componentDidMount() {
-        await this.props.getAllPost()
-        this.setState({ postList: this.props.POST })
-        debugger
+        await this.props.getCategories()
+        this.setState({ categoryList: this.props.CATEGORY })
     }
     editPost = (post) => {
-        //console.log("Workidddng", post)
         this.props.propsData(post)
-        this.props.history.replace(`/post/${post._id}`)
-        // this.setState({ singleData: post, editShow: true })
+        this.setState({ singleData: post, editShow: true, editForm: true })
     }
-    deletePost = (id) => {
-        debugger
 
+    showPopup = () => {
+        this.setState({ show: true, editShow: true, editForm: false })
     }
-    
+    hidePopup = () => {
+        this.props.propsData()
+        this.setState({ show: false, editShow: false })
+    }
 
     render() {
-        const { postList, singleData, editShow } = this.state
+        const { categoryList, singleData, editShow, editForm } = this.state
         return (<>
             <div className="page-header">
                 <div className="page-block">
                     <div className="row align-items-center">
                         <div className="col-md-12">
                             <div className="page-header-title">
-                                <h5 className="m-b-10">All Posts</h5>
+                                <h5 className="m-b-10">All Categories</h5><Button variant="primary" onClick={this.showPopup}>Add Category</Button>
                             </div>
                         </div>
                     </div>
@@ -60,24 +59,19 @@ class Posts extends Component {
                                     <div className="table-responsive">
                                         <table className="table table-hover">
                                             <tbody>
-                                            <tr>
-                                                    <th>Image</th><th>Title</th><th>Category</th><th>Date</th> <th>Action</th>
-                                                </tr>
-                                                {postList.map((post, index) => (
+
+                                                {categoryList.map((category, index) => (
                                                     <tr className="unread" key={index}>
-                                                        <td><img className="rounded-circle" src={post.postImage} alt="activity-user" style={{ width: '50px' }} /></td>
+                                                        <td><img className="rounded-circle" src={category.categoryImage} alt="activity-user" style={{ width: '50px' }} /></td>
                                                         <td>
-                                                            <h6 className="mb-1">{post.postTitle}</h6>
+                                                            <h6 className="mb-1">{category.categoryName}</h6>
                                                         </td>
                                                         <td>
-                                                            <h6 className="mb-1">{post.postCategory.categoryName}</h6>
+                                                            <h6 className="text-muted"><i className="fas fa-circle text-c-green f-10 m-r-15"></i>{moment(category.createdAt).format('DD MMM YYYY')} </h6>
                                                         </td>
                                                         <td>
-                                                            <h6 className="text-muted"><i className="fas fa-circle text-c-green f-10 m-r-15"></i>{moment(post.createdAt).format('DD MMM YYYY')} </h6>
-                                                        </td>
-                                                        <td>
-                                                            <span onClick={() => this.editPost(post)} className="label theme-bg2 text-white f-12">Edit</span>
-                                                             <span className="label theme-bg text-white f-12"  onClick={() => this.deletePost(post._id)}>Delete</span> 
+                                                            <span onClick={() => this.editPost(category)} className="label theme-bg2 text-white f-12">Edit</span>
+                                                            {/* <span className="label theme-bg text-white f-12">Edit</span> */}
                                                         </td>
                                                     </tr>
                                                 ))}
@@ -87,7 +81,7 @@ class Posts extends Component {
                                 </div>
                             </div>
 
-                            {/* {editShow ? <EditPost data={singleData} /> : null} */}
+                            {editShow ? <EditPost data={singleData} showPopup={this.showPopup} hidePopup={this.hidePopup} editForm={editForm} /> : null}
                         </div>
                     </div>
 
@@ -97,5 +91,5 @@ class Posts extends Component {
         </>);
     }
 }
-const mapStateToProps = ({ POST, UserReducer, PROPS_DATA }) => ({ POST, UserReducer, PROPS_DATA });
-export default connect(mapStateToProps, { getAllPost, getUser, propsData })(Posts);
+const mapStateToProps = ({ CATEGORY, PROPS_DATA }) => ({ CATEGORY, PROPS_DATA });
+export default connect(mapStateToProps, { getCategories, addCategory, propsData })(Category);

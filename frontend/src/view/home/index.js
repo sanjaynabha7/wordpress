@@ -11,6 +11,8 @@ import Posts from '../posts'
 import AddPost from '../posts/addpost'
 import EditPost from '../posts/editPost'
 import Menu from '../../components/menu'
+import Category from '../posts/category'
+
 
 
 
@@ -47,8 +49,8 @@ class HomeView extends Component {
                       <Route path='/post/:id' component={EditPost} />
                       <Route path='/grid-example' component={GridExample} />
                       <Route path='/menu' component={Menu} />
-
-                    </div>
+                      <Route path='/category' component={Category} />
+                   </div>
                   </div>
                 </div>
               </div>

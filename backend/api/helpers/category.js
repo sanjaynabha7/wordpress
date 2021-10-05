@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
-const Posts = require("../../models/posts");
+const Category = require("../../models/category");
 
-addNewPost = (req, res) => {
+addCategory = (req, res) => {
     const payload = req.body;
-    Posts.create(payload).then(createdRecord => {
+    Category.create(payload).then(createdRecord => {
         console.log(payload)
         return res.status(200).send({
             status: 200,
@@ -18,13 +18,11 @@ addNewPost = (req, res) => {
         });
     });
 
-
-
 };
 
 
-getPosts = (req, res) => {
-    Posts.find().populate('postCategory').then(records => {
+getCategories = (req, res) => {
+    Category.find().then(records => {
         return res.status(200).send({
             status: 200,
             msg: "ok",
@@ -33,9 +31,9 @@ getPosts = (req, res) => {
     })
 }
 
-updatePosts = (req, res) => {
+updateCategory = (req, res) => {
     const Post = req.body;
-    Posts.findOneAndUpdate({ _id: req.body.id }, Post).then(createdRecord => {
+    Category.findOneAndUpdate({ _id: req.body.id }, Post).then(createdRecord => {
         return res.status(200).send({
             status: 200,
             msg: "ok",
@@ -46,11 +44,11 @@ updatePosts = (req, res) => {
             status: 400,
             msg: "error",
             data: e,
-        }); 
+        });
     });
 }
 
 
 
 
-module.exports = { addNewPost, getPosts, updatePosts };
+module.exports = { addCategory, getCategories, updateCategory };
