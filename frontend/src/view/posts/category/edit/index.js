@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { addCategory, updateCategory } from "../../../../store/actions";
+import { addCategory, updateCategory, fileImageUpload } from "../../../../store/actions";
 import { connect } from "react-redux";
 import Editor from '../../../../components/textEditor/text-editor'
 import Modal from 'react-bootstrap/Modal'
@@ -44,6 +44,34 @@ class AddCategory extends Component {
         this.props.hidePopup()
     }
 
+
+
+
+    onSelectFile = (e) => {
+        debugger
+        let file =  e.target.files[0];
+
+        const fd = new FormData();
+
+        fd.append("itemImage", file);
+
+        fileImageUpload(fd).then(result => {
+          console.log(result)
+
+          this.setState({
+          file: file,
+          imageFileError: null,
+          itemFileName: file.name,
+        });
+
+         })
+           
+    
+        
+        
+      };
+    
+
     updateCategory = async ($e) => {
         $e.preventDefault();
         let payload = {
@@ -59,7 +87,7 @@ class AddCategory extends Component {
 
     render() {
         const { editForm } = this.props
-        const {  categoryDescription } = this.props.data
+        const { categoryDescription } = this.props.data
         return (
             <>
                 <Modal show={this.props.showPopup} onHide={this.props.hidePopup} animation={true} size="lg">
@@ -88,6 +116,9 @@ class AddCategory extends Component {
                                                             <div className="form-group">
                                                                 <label>Image</label>
                                                                 <input type="text" className="form-control" placeholder="Image" value={this.state.categoryImage} onChange={(e) => this.setState({ categoryImage: e.target.value })} />
+                                                                <input
+                                                                    accept=".PNG,.png,.jpg,JPEG" className="dn" type="file" id="upld_image" onChange={this.onSelectFile} ref={this.fileInput}
+                                                                ></input>
                                                             </div>
                                                             <div className="form-group">
                                                                 <label for="exampleFormControlTextarea1">Category Description</label>
@@ -126,4 +157,4 @@ class AddCategory extends Component {
 }
 
 const mapStateToProps = ({ PROPS_DATA }) => ({ PROPS_DATA });
-export default connect(mapStateToProps, { addCategory,updateCategory })(AddCategory);
+export default connect(mapStateToProps, { addCategory, updateCategory })(AddCategory);
