@@ -59,8 +59,6 @@ class UsersView extends Component {
   usersPayload = {};
 
   async componentDidMount() {
-    debugger
- 
     this.getData();
   }    
 

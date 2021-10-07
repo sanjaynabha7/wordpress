@@ -48,7 +48,6 @@ class AddCategory extends Component {
 
 
     onSelectFile = (e) => {
-        debugger
         let file =  e.target.files[0];
 
         const fd = new FormData();

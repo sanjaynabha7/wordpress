@@ -5,7 +5,7 @@ var storage = multer.memoryStorage();
 var upload = multer({ storage: storage }).single("file");
 const router = express.Router();
 
-router.post('/upload-file', (req, res) => {
+router.post('/upload-file', upload, (req, res) => {
     fileUpload(req, res);
 })
 

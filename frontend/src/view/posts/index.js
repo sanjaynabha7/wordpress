@@ -20,7 +20,6 @@ class Posts extends Component {
     async componentDidMount() {
         await this.props.getAllPost()
         this.setState({ postList: this.props.POST })
-        debugger
     }
     editPost = (post) => {
         //console.log("Workidddng", post)
@@ -29,7 +28,6 @@ class Posts extends Component {
         // this.setState({ singleData: post, editShow: true })
     }
     deletePost = (id) => {
-        debugger
 
     }
     

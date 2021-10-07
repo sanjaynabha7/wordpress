@@ -17,7 +17,7 @@ class Editor extends React.Component {
     componentDidMount() {
         let dd = this.props.value
         this.setState({ editorHtml: this.props.value })
-        debugger
+
     }
 
     componentDidUpdate() {

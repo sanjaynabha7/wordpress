@@ -2,21 +2,32 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { login } from "../../store/actions";
 import { addUser } from "../../store/actions/users";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
 class LoginView extends Component {
   state = {
     data: []
   }
+
+  componentDidMount() {
+    debugger
+    let data = JSON.parse(localStorage.getItem("USER"));
+    if (data) {
+      this.props.history.push('/');
+    }
+  }
   componentDidUpdate() {
-    if (this.props.USER.length) {
+    if (this.props.LOGIN.User) {
       this.checkUserAndRedirect();
     }
   }
+
+
   login = async ($e) => {
     $e.preventDefault();
     let payload = {
       email: this.state.email,
       password: this.state.password,
+      isLogin: true
     }
     await this.props.login(payload);
 
@@ -25,7 +36,7 @@ class LoginView extends Component {
 
   checkUserAndRedirect = () => {
 
-    if (this.props.USER) {
+    if (this.props.LOGIN.User) {
 
 
       this.props.history.push('/');
@@ -34,7 +45,7 @@ class LoginView extends Component {
   }
 
   render() {
-    const allData = this.state.data
+
     return (
       <>
         <div className="auth-wrapper">
@@ -69,5 +80,5 @@ class LoginView extends Component {
   }
 }
 
-const mapStateToProps = ({ USER }) => ({ USER });
+const mapStateToProps = ({ USER, LOGIN }) => ({ USER, LOGIN });
 export default connect(mapStateToProps, { login })(LoginView);

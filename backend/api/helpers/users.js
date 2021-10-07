@@ -34,7 +34,7 @@ login = (req, res) => {
     User.findOne({ email: payload.email }, (err, User) => {
         if (User) {
             if (payload.password === User.password) {
-                res.send({ message: 'login successfully', user: User })
+                res.send({ message: 'login successfully', User })
             } else {
                 res.send({ message: 'password not match' })
             }

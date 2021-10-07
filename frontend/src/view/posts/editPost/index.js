@@ -1,32 +1,38 @@
 import React, { Component } from 'react'
-import { updatePost, getCategories } from "../../../store/actions";
+import { updatePost, getCategories, fileImageUpload } from "../../../store/actions";
 import { connect } from "react-redux";
 import Editor from '../../../components/textEditor/text-editor'
 class EditPost extends Component {
     state = {
         postTitle: "",
+        replaced:"",
         postDescription: "",
         postImage: "",
         _id: "",
         postCategory: "",
         categoryList: [],
-        category: ""
+        category: "",
+        itemFileName: null,
+        src: null
     }
 
     async componentDidMount() {
-
         const { postTitle, postDescription, postImage, _id, postCategory } = this.props.PROPS_DATA
         this.setState({ postTitle, postDescription, postImage, _id, postCategory: postCategory.categoryName })
         console.log("ssss", postDescription)
         await this.props.getCategories()
         this.setState({ categoryList: this.props.CATEGORY })
-        debugger
     }
     textChange = (data) => {
-        debugger
         console.log("ssss", data)
         this.setState({ postDescription: data })
         console.log(this.state.postDescription)
+    }
+    titleChange = (event) => {
+        const postTitle = event.target.value
+        const lowerCase = postTitle.toLowerCase()
+        const replaced = lowerCase.replace(/ /g, "-");
+        this.setState({ replaced, postTitle })
     }
 
     changeCategory = (event) => {
@@ -34,17 +40,39 @@ class EditPost extends Component {
     }
 
     UpdatePost = async ($e) => {
-        debugger
         $e.preventDefault();
         let payload = {
             id: this.state._id,
             postTitle: this.state.postTitle,
             postDescription: this.state.postDescription,
-            postImage: this.state.postImage,
+            postImage: this.state.src,
+            postUrl: this.state.replaced,
             postCategory: this.state.category
         }
         await this.props.updatePost(payload);
         this.props.history.replace('/posts')
+    }
+    fileChangedHandler = (event) => {
+        let file = event.target.files[0];
+        const fd = new FormData();
+        fd.append("itemImage", file);
+        fileImageUpload(fd).then(result => {
+            console.log(result)
+            let reader = new FileReader();
+            this.setState({
+                file: file,
+                imageFileError: null,
+                itemFileName: file.name,
+            });
+            reader.readAsDataURL(file);
+            reader.onload = (res) =>
+                this.setState({
+                    src: res.target.result,
+                    imageUrl: result.url
+
+                });
+        })
+
     }
 
     render() {
@@ -77,16 +105,27 @@ class EditPost extends Component {
                                                 <form>
                                                     <div className="form-group">
                                                         <label>Title</label>
-                                                        <input type="text" className="form-control" placeholder="Title" value={this.state.postTitle} onChange={(e) => this.setState({ postTitle: e.target.value })} />
+                                                        <input type="text" className="form-control" placeholder="Title" value={this.state.postTitle} onChange={this.titleChange} />
                                                     </div>
                                                     <div className="form-group">
                                                         <label>Image</label>
-                                                        <input type="text" className="form-control" placeholder="Image" value={this.state.postImage} onChange={(e) => this.setState({ postImage: e.target.value })} />
+                                                        <input type="file" onChange={this.fileChangedHandler} />
                                                     </div>
+                                                    <div className="upld_lbld">
+                                                        <img className="thambsImage" src={this.state.postImage} alt={this.state.postImage} />
+                                                        {this.state.imageUrl}
+                                                    </div>
+                                                    {this.state.itemFileName && (
+
+                                                        <div className="upld_lbld">
+                                                            <img className="thambsImage" src={this.state.src} alt={this.state.itemFileName} />
+                                                            {this.state.imageUrl}
+                                                        </div>
+                                                    )}
                                                     <div className="form-group">
                                                         <label for="exampleFormControlTextarea1">Example textarea</label>
                                                         <Editor value={postDescription} onChange={this.textChange} />
-                                                        {/* <textarea className="form-control" id="exampleFormControlTextarea1" rows="3" value={this.state.postDescription} onChange={(e) => this.setState({ postDescription: e.target.value })}></textarea> */}
+
                                                     </div>
 
                                                     <div className="form-group">

@@ -21,7 +21,6 @@ class MenuBar extends Component {
 
 
     handleClick(item, positopn) {
-        debugger
         this.setState(prevState => (
             { [item]: !prevState[item] }
         ))

@@ -13,22 +13,17 @@ import EditPost from '../posts/editPost'
 import Menu from '../../components/menu'
 import Category from '../posts/category'
 
-
-
-
 class HomeView extends Component {
   state = {
     data: []
   }
 
-  async componentDidMount() {
-    // await this.props.getAllPost()
-    await this.props.getAllPost()
-    const allProducta = this.props
-
-
+  componentDidMount() {
+    let data = JSON.parse(localStorage.getItem("USER"));
+    if (data === null) {
+      this.props.history.push('/login');
+    }
   }
-
 
 
   render() {
@@ -63,5 +58,5 @@ class HomeView extends Component {
   }
 }
 
-const mapStateToProps = ({ ProductsR, POST }) => ({ ProductsR, POST });
+const mapStateToProps = ({ ProductsR, POST, LOGIN }) => ({ ProductsR, POST, LOGIN });
 export default connect(mapStateToProps, { getProducts, getAllPost })(HomeView);

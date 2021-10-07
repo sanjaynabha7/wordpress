@@ -4,6 +4,8 @@ import UserReducer from './usersR';
 import PostReducer from './postsR';
 import CategoryReducer from './categoryR';
 import PropsData from './propsDataR'
+import LoginReducer from './loginR'
+
 
 
 
@@ -13,6 +15,7 @@ const Reducers = combineReducers({
     POST: PostReducer,
     CATEGORY: CategoryReducer,
     PROPS_DATA: PropsData,
+    LOGIN:LoginReducer,
 })
 
 export default Reducers;
