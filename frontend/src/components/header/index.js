@@ -5,6 +5,7 @@ import { Redirect } from 'react-router-dom';
 
 class Header extends Component {
 
+
     state = {
         isLoggedIn: true
     }
@@ -16,16 +17,18 @@ class Header extends Component {
     logOut = () => {
         debugger
         this.props.logout()
+        this.props.history.replace('/login');
         console.log("Working")
 
 
-        if (this.props.LOGIN.User) {
-            return <Redirect to='/login' />
-        }
+        // if (this.props.LOGIN.User) {
+        //     return <Redirect to='/login' />
+        // }
 
     }
 
     render() {
+
 
         return (
             <>

@@ -76,8 +76,9 @@ class EditPost extends Component {
     }
 
     render() {
+        console.log(`this.props=========`, this.props)
 
-        const { postDescription } = this.props.PROPS_DATA
+        const { postDescription } = this?.props?.PROPS_DATA
         return (
             <>
                 <div className="page-header">

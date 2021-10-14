@@ -33,6 +33,8 @@ class Posts extends Component {
     
 
     render() {
+    console.log(`this.props`, this.props)
+
         const { postList, singleData, editShow } = this.state
         return (<>
             <div className="page-header">
