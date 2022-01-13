@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { addCategory, updateCategory, fileImageUpload } from "../../../../store/actions";
+import { addCategory, updateCategory, fileImageUpload, getCategories } from "../../../../store/actions";
 import { connect } from "react-redux";
 import Editor from '../../../../components/textEditor/text-editor'
 import Modal from 'react-bootstrap/Modal'
@@ -19,6 +19,8 @@ class AddCategory extends Component {
         })
 
     }
+
+
     textChange = (data) => {
         console.log("Working", data)
         this.setState({ categoryDescription: data })
@@ -48,30 +50,31 @@ class AddCategory extends Component {
 
 
     onSelectFile = (e) => {
-        let file =  e.target.files[0];
+        let file = e.target.files[0];
 
         const fd = new FormData();
 
         fd.append("itemImage", file);
 
         fileImageUpload(fd).then(result => {
-          console.log(result)
+            console.log(result)
 
-          this.setState({
-          file: file,
-          imageFileError: null,
-          itemFileName: file.name,
-        });
+            this.setState({
+                file: file,
+                imageFileError: null,
+                itemFileName: file.name,
+            });
 
-         })
-           
-    
-        
-        
-      };
-    
+        })
+
+
+
+
+    };
+
 
     updateCategory = async ($e) => {
+        debugger
         $e.preventDefault();
         let payload = {
             id: this.props.data._id,
@@ -156,4 +159,4 @@ class AddCategory extends Component {
 }
 
 const mapStateToProps = ({ PROPS_DATA }) => ({ PROPS_DATA });
-export default connect(mapStateToProps, { addCategory, updateCategory })(AddCategory);
+export default connect(mapStateToProps, { addCategory, updateCategory, getCategories })(AddCategory);

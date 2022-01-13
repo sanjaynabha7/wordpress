@@ -43,6 +43,7 @@ export const getCategories = () => {
 
 
 export const updateCategory = (payload) => {
+    debugger
     return async (dispatch) => {
         await axios.put(API.updateCategory, payload).then(response => {
             dispatch({

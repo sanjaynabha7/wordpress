@@ -1,5 +1,6 @@
 import '../src/assets/css/bootstrap.css';
 import './App.css';
+import './utils/axios';
 import HomeView from './view/home'
 import Login from './view/login'
 import Signup from './view/signUp'

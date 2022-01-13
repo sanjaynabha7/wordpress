@@ -17,9 +17,15 @@ class Category extends Component {
         }
     }
     async componentDidMount() {
+        debugger
         await this.props.getCategories()
         this.setState({ categoryList: this.props.CATEGORY })
     }
+    async componentDidUpdate() {
+   debugger
+        // await this.props.getCategories()
+    }
+
     editPost = (post) => {
         this.props.propsData(post)
         this.setState({ singleData: post, editShow: true, editForm: true })
@@ -28,9 +34,10 @@ class Category extends Component {
     showPopup = () => {
         this.setState({ show: true, editShow: true, editForm: false })
     }
-    hidePopup = () => {
+    hidePopup = async () => {
         this.props.propsData()
         this.setState({ show: false, editShow: false })
+        await this.props.getCategories()
     }
 
     render() {
